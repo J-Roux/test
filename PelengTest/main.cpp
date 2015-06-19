@@ -1,6 +1,44 @@
 #include "Logger.h"
 #include "main.h"
 
+
+DWORD WINAPI eventThread(LPVOID lpParameter)
+{
+    HANDLE * hArgv = (HANDLE*) lpParameter;
+    CHAR command[2] = {'0', '\0'};
+    DWORD dwRead;
+    int speed = 1000;
+    bool pause = false;
+    for (;;)
+    {
+        if (!pause)
+        {
+            My_Event e = createEvent();
+            cout << speed << "  " << pause << endl;
+            DWORD bytes_written = 1;
+            WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
+            Sleep(speed);
+        }
+        if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
+        {
+            SetEvent(hArgv[2]);
+            ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
+            cout << command << endl;
+            switch (command[0])
+            {
+                case 'p': pause = true; break;
+                case 'r': pause = false; break;
+                case 'f': if(speed > 0) speed -= 100; break;
+                case 's': speed += 100; break;
+            }
+            ResetEvent(hArgv[2]);
+        }
+    }
+	return 0;
+}
+
+
+
 void prepare()
 {
 	commands.insert(make_pair("date", &date_func));
@@ -16,13 +54,40 @@ void prepare()
 	commands.insert(make_pair("level 2", &level_two_func));
 }
 
+void createAnonPipe(HANDLE &child_input_read, HANDLE &child_input_write)
+{
+    SECURITY_ATTRIBUTES security_attributes;
+    security_attributes.nLength = sizeof(SECURITY_ATTRIBUTES);
+    security_attributes.bInheritHandle = TRUE;
+    security_attributes.lpSecurityDescriptor = NULL;
+    if (!CreatePipe(&child_input_read, &child_input_write, &security_attributes, 0))
+        cerr << "Create pipe";
+
+}
+
+HANDLE createEventThread(HANDLE *argv)
+{
+    DWORD myThreadID;
+    HANDLE hEventThread = CreateThread(0, 0, eventThread, argv, 0, &myThreadID);
+    if (hEventThread == NULL)
+        cerr << "Create event thread";
+    return hEventThread;
+}
+
+
 void main()
 {
-	prepare();
-	My_Event * e = new My_Event();
-	My_Event * e1 = new My_Event();
-	delete e;
-	delete e1;
+    HANDLE hEventThreadRead;
+    HANDLE hEventThreadWrite;
+    HANDLE hLogThreadWrite;
+    HANDLE hLogThreadRead;
+    prepare();
+    createAnonPipe(hEventThreadRead, hEventThreadWrite);
+    HANDLE hWaitCommand = CreateEventA(NULL, false, false, "somename1");
+    createAnonPipe(hLogThreadRead, hLogThreadWrite);
+    HANDLE hReadCommand = CreateEventA(NULL, false, false, "somename");
+    HANDLE hArr[] = { hReadCommand, hEventThreadRead, hWaitCommand, hLogThreadWrite };
+    HANDLE hEventThread = createEventThread(hArr);
 	std::string input;
 	while (true)
 	{
@@ -30,13 +95,18 @@ void main()
 		action_map::iterator iter = commands.find(input);
 		if (iter != commands.end())
 		{
-			(*iter->second)();
-			if (exit_programm == true) break;
+            SetEvent(hReadCommand);
+            cout << hWaitCommand << endl;
+            WaitForSingleObject(hWaitCommand, INFINITE);
+            (*iter->second)(hEventThreadWrite);
+            ResetEvent(hReadCommand);
+            if (exit_programm == true) break;
 		}
 		else
 		{
 			cerr << "Invalid argument" << endl;
 		}
 	}
+	CloseHandle(hEventThread);
 }
 

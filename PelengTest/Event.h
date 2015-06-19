@@ -1,7 +1,10 @@
 #pragma once
 #include <Objbase.h>
 #include <string>
+#include <time.h>
 #include <iostream>
+#include <stdlib.h>    
+#include <time.h> 
 
 struct My_Event
 {
@@ -11,5 +14,7 @@ struct My_Event
 	int p1;
 	int p2;
 	char * id;
-	My_Event();
 };
+
+My_Event createEvent();
+char * createGUID();
