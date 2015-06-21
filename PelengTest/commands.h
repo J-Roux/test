@@ -1,9 +1,9 @@
 #pragma once
-#include "action_map.h"
+#include "actionMap.h"
 #include <Windows.h>
 
 
-extern action_map commands;
+extern ActionMap commands;
 extern bool exit_programm;
 
 void date_func(HANDLE hInput);

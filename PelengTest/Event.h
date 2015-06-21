@@ -6,7 +6,7 @@
 #include <stdlib.h>    
 #include <time.h> 
 
-struct My_Event
+struct Event
 {
 	char * date;
 	char * time;
@@ -16,5 +16,5 @@ struct My_Event
 	char * id;
 };
 
-My_Event createEvent();
+Event createEvent();
 char * createGUID();

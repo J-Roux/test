@@ -21,10 +21,13 @@
     <ClCompile Include="commands.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="action_map.cpp">
+    <ClCompile Include="Event.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="Event.cpp">
+    <ClCompile Include="Logger.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="actionMap.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,13 +38,13 @@
     <ClInclude Include="Event.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="action_map.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="commands.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="actionMap.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

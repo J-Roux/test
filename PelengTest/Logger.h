@@ -1,11 +1,40 @@
 #include "Event.h"
+#include <fstream>
+
+using namespace std;
+
 
 class Logger
 {
 protected:
-	Logger(char* fileName);
-	~Logger();
+    ofstream log;
+    int eventCount;
+
+    Logger(char* fileName);
+    ~Logger();
 public:
-	static Logger* GetLogger(int level);
-	virtual Logger* Write(My_Event event);
+	static Logger* GetLogger(int level, char* fileName);
+	virtual Logger* Write(const Event &e) abstract;
+};
+
+class LoggerLevelZero : public Logger
+{
+public:
+    LoggerLevelZero(char* fileName) : Logger(fileName) {}
+    virtual LoggerLevelZero* Write(const Event &e) override;
+};
+
+class LoggerLevelOne : public Logger
+{
+public:
+    LoggerLevelOne(char* fileName) : Logger(fileName) {}
+    virtual LoggerLevelOne* Write(const Event &e) override;
+
+};
+
+class LoggerLevelTwo : public Logger
+{
+public:
+    LoggerLevelTwo(char* fileName) : Logger(fileName) {}
+    virtual LoggerLevelTwo* Write(const Event &e) override;
 };

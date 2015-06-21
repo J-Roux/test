@@ -13,7 +13,7 @@ DWORD WINAPI eventThread(LPVOID lpParameter)
     {
         if (!pause)
         {
-            My_Event e = createEvent();
+            Event e = createEvent();
             cout << speed << "  " << pause << endl;
             DWORD bytes_written = 1;
             WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
@@ -37,6 +37,11 @@ DWORD WINAPI eventThread(LPVOID lpParameter)
 	return 0;
 }
 
+DWORD WINAPI loggerThread(LPVOID lpParameter)
+{
+
+    return 0;
+}
 
 
 void prepare()
@@ -65,7 +70,7 @@ void createAnonPipe(HANDLE &child_input_read, HANDLE &child_input_write)
 
 }
 
-HANDLE createEventThread(HANDLE *argv)
+HANDLE CreateEventThread(HANDLE *argv)
 {
     DWORD myThreadID;
     HANDLE hEventThread = CreateThread(0, 0, eventThread, argv, 0, &myThreadID);
@@ -74,6 +79,14 @@ HANDLE createEventThread(HANDLE *argv)
     return hEventThread;
 }
 
+HANDLE CreateLoggerThread(HANDLE *argv)
+{
+    DWORD myThreadID;
+    HANDLE hLoggerThread = CreateThread(0, 0, loggerThread, argv, 0, &myThreadID);
+    if (hLoggerThread == NULL)
+        cerr << "Create event thread";
+    return hLoggerThread;
+}
 
 void main()
 {
@@ -83,16 +96,18 @@ void main()
     HANDLE hLogThreadRead;
     prepare();
     createAnonPipe(hEventThreadRead, hEventThreadWrite);
-    HANDLE hWaitCommand = CreateEventA(NULL, false, false, "somename1");
+    HANDLE hWaitCommand = CreateEventA(NULL, false, false, createGUID());
     createAnonPipe(hLogThreadRead, hLogThreadWrite);
-    HANDLE hReadCommand = CreateEventA(NULL, false, false, "somename");
-    HANDLE hArr[] = { hReadCommand, hEventThreadRead, hWaitCommand, hLogThreadWrite };
-    HANDLE hEventThread = createEventThread(hArr);
-	std::string input;
+    HANDLE hReadCommand = CreateEventA(NULL, false, false, createGUID());
+    HANDLE hEventArgs[] = { hReadCommand, hEventThreadRead, hWaitCommand, hLogThreadWrite };
+    HANDLE hLoggerArgs[] = { hReadCommand, hLogThreadRead };
+    HANDLE hEventThread = CreateEventThread(hEventArgs);
+    HANDLE hLoggerThread = CreateLoggerThread(hLoggerArgs);
+    std::string input;
 	while (true)
 	{
 		std::cin >> input;
-		action_map::iterator iter = commands.find(input);
+		ActionMap::iterator iter = commands.find(input);
 		if (iter != commands.end())
 		{
             SetEvent(hReadCommand);
@@ -108,5 +123,6 @@ void main()
 		}
 	}
 	CloseHandle(hEventThread);
+    CloseHandle(hLoggerThread);
 }
 

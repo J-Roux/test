@@ -64,13 +64,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="action_map.cpp" />
+    <ClCompile Include="actionMap.cpp" />
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="action_map.h" />
+    <ClInclude Include="actionMap.h" />
     <ClInclude Include="commands.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Logger.h" />

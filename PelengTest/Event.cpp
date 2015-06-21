@@ -1,8 +1,8 @@
 #include "Event.h"
 
-My_Event createEvent()
+Event createEvent()
 {
-	My_Event event;
+	Event event;
 	srand((unsigned int)time(NULL));	
 	event.id = createGUID();
 	event.date = __DATE__;
