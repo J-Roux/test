@@ -6,5 +6,5 @@
 
 using namespace std;
 
-typedef void(*Function)(HANDLE);
+typedef void(*Function)(HANDLE*);
 typedef map<string, Function> ActionMap;

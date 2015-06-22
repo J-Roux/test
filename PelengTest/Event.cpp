@@ -1,10 +1,10 @@
 #include "Event.h"
 
-Event createEvent()
+Event CreateCustomEvent()
 {
 	Event event;
-	srand((unsigned int)time(NULL));	
-	event.id = createGUID();
+	srand((unsigned int)time(NULL));
+	event.id = CreateGUID();
 	event.date = __DATE__;
 	event.time = __TIME__;
 	event.p0 = rand();
@@ -14,11 +14,11 @@ Event createEvent()
 }
 
 
-char * createGUID()
+char * CreateGUID()
 {
 	wchar_t szGuidW[40] = { 0 };
-	char szGuidA[40] = { 0 };
-	GUID guid = { 0 };
+	char * szGuidA = new char[40];
+    GUID guid = { 0 };
 	CoCreateGuid(&guid);
 	StringFromGUID2(guid, szGuidW, 40);
 	WideCharToMultiByte(0, 0, szGuidW, -1, szGuidA, 40, NULL, NULL);

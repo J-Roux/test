@@ -16,5 +16,5 @@ struct Event
 	char * id;
 };
 
-Event createEvent();
-char * createGUID();
+Event CreateCustomEvent();
+char * CreateGUID();

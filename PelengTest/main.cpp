@@ -2,34 +2,36 @@
 #include "main.h"
 
 
-DWORD WINAPI eventThread(LPVOID lpParameter)
+DWORD WINAPI EventThread(LPVOID lpParameter)
 {
     HANDLE * hArgv = (HANDLE*) lpParameter;
     CHAR command[2] = {'0', '\0'};
     DWORD dwRead;
-    int speed = 1000;
+    srand((unsigned int)time(NULL));
+    int baseSpeed = 1000;
     bool pause = false;
     for (;;)
     {
         if (!pause)
         {
-            Event e = createEvent();
+            int speed = baseSpeed + rand() % baseSpeed;
+           // Event e = createEvent();
             cout << speed << "  " << pause << endl;
-            DWORD bytes_written = 1;
-            WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
+           // DWORD bytes_written = 1;
+           // WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
             Sleep(speed);
         }
         if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
         {
+   
             SetEvent(hArgv[2]);
             ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
-            cout << command << endl;
             switch (command[0])
             {
                 case 'p': pause = true; break;
                 case 'r': pause = false; break;
-                case 'f': if(speed > 0) speed -= 100; break;
-                case 's': speed += 100; break;
+                case 'f': if( baseSpeed > 0) baseSpeed -= 100; break;
+                case 's': baseSpeed += 100; break;
             }
             ResetEvent(hArgv[2]);
         }
@@ -39,12 +41,29 @@ DWORD WINAPI eventThread(LPVOID lpParameter)
 
 DWORD WINAPI loggerThread(LPVOID lpParameter)
 {
-
+    HANDLE * hArgv = (HANDLE*)lpParameter;
+    CHAR command[2] = { '0', '\0' };
+    DWORD dwRead;
+    for (;;)
+    {
+        SetEvent(hArgv[2]);
+        ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
+        cout << endl << command << endl;
+        switch (command[0])
+        {
+            case '0': break;
+            case '1': break;
+            case '2': break;
+            case 's':
+                break;
+        }
+        ResetEvent(hArgv[2]);
+    }
     return 0;
 }
 
 
-void prepare()
+void Prepare()
 {
 	commands.insert(make_pair("date", &date_func));
 	commands.insert(make_pair("time", &time_func));
@@ -59,7 +78,7 @@ void prepare()
 	commands.insert(make_pair("level 2", &level_two_func));
 }
 
-void createAnonPipe(HANDLE &child_input_read, HANDLE &child_input_write)
+void CreateAnonPipe(HANDLE &child_input_read, HANDLE &child_input_write)
 {
     SECURITY_ATTRIBUTES security_attributes;
     security_attributes.nLength = sizeof(SECURITY_ATTRIBUTES);
@@ -73,7 +92,7 @@ void createAnonPipe(HANDLE &child_input_read, HANDLE &child_input_write)
 HANDLE CreateEventThread(HANDLE *argv)
 {
     DWORD myThreadID;
-    HANDLE hEventThread = CreateThread(0, 0, eventThread, argv, 0, &myThreadID);
+    HANDLE hEventThread = CreateThread(0, 0, EventThread, argv, 0, &myThreadID);
     if (hEventThread == NULL)
         cerr << "Create event thread";
     return hEventThread;
@@ -94,13 +113,17 @@ void main()
     HANDLE hEventThreadWrite;
     HANDLE hLogThreadWrite;
     HANDLE hLogThreadRead;
-    prepare();
-    createAnonPipe(hEventThreadRead, hEventThreadWrite);
-    HANDLE hWaitCommand = CreateEventA(NULL, false, false, createGUID());
-    createAnonPipe(hLogThreadRead, hLogThreadWrite);
-    HANDLE hReadCommand = CreateEventA(NULL, false, false, createGUID());
-    HANDLE hEventArgs[] = { hReadCommand, hEventThreadRead, hWaitCommand, hLogThreadWrite };
-    HANDLE hLoggerArgs[] = { hReadCommand, hLogThreadRead };
+    HANDLE hMainThreadRead;
+    HANDLE hMainThreadWrite;
+    Prepare();
+    CreateAnonPipe(hEventThreadRead, hEventThreadWrite);
+    CreateAnonPipe(hLogThreadRead, hLogThreadWrite);
+    CreateAnonPipe(hMainThreadRead, hMainThreadWrite);
+    HANDLE hWaitCommand = CreateEventA(NULL, false, false, CreateGUID());
+    HANDLE hReadCommandEventThread = CreateEventA(NULL, false, false, CreateGUID());
+    HANDLE hEventArgs[] = { hReadCommandEventThread, hEventThreadRead, hWaitCommand, hLogThreadWrite };
+    HANDLE hLoggerArgs[] = { hWaitCommand , hLogThreadRead, hMainThreadWrite };
+    HANDLE hFuncArgs[] = { hEventThreadWrite, hReadCommandEventThread, hWaitCommand };
     HANDLE hEventThread = CreateEventThread(hEventArgs);
     HANDLE hLoggerThread = CreateLoggerThread(hLoggerArgs);
     std::string input;
@@ -110,11 +133,7 @@ void main()
 		ActionMap::iterator iter = commands.find(input);
 		if (iter != commands.end())
 		{
-            SetEvent(hReadCommand);
-            cout << hWaitCommand << endl;
-            WaitForSingleObject(hWaitCommand, INFINITE);
-            (*iter->second)(hEventThreadWrite);
-            ResetEvent(hReadCommand);
+            (*iter->second)(hFuncArgs);
             if (exit_programm == true) break;
 		}
 		else
