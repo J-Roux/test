@@ -9,11 +9,11 @@
 using namespace std;
 
 typedef void(*Function)(HANDLE hEventThreadWrite,
-                        HANDLE hLogThreadRead, 
-                        HANDLE hWaitCommand,
-                        HANDLE hReadCommandEventThread, 
-                        HANDLE hReadCommandLoggerThread,
-                        HANDLE hMainThreadRead,
-                        HANDLE hLogThreadWriteCommand);
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand);
 typedef map<string, Function> ActionMap;
 #endif /*ACTIONMAP_H*/

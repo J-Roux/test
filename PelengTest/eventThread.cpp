@@ -7,7 +7,7 @@ void GenerateEvent(bool pause, double baseSpeed, HANDLE * hArgv)
     {
         double speed = baseSpeed + rand() % (int)baseSpeed;
         Event e = CreateCustomEvent();
-        cout << speed << "  " << e.id << endl;
+       // cout << speed << "  " << e.id << endl;
         WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
         Sleep(speed);
     }
@@ -15,6 +15,7 @@ void GenerateEvent(bool pause, double baseSpeed, HANDLE * hArgv)
 
 void ExecuteCommand(CHAR * command, bool &pause, double &baseSpeed)
 {
+    cout << command << endl;
     switch (command[0])
     {
     case 'p': pause = true; break;

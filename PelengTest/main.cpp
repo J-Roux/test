@@ -56,27 +56,27 @@ void main()
     HANDLE hEventThread = CreateEventThread(hEventArgs);
     HANDLE hLoggerThread = CreateLoggerThread(hLoggerArgs);
     string input;
-	while (true)
-	{
-		cin >> input;
-		auto iter = commands.find(input);
-		if (iter != commands.end())
-		{
-            (*iter->second)(hEventThreadWrite, 
-                            hLogThreadRead, 
-                            hWaitCommand, 
-                            hReadCommandEventThread, 
-                            hReadCommandLoggerThread,
-                            hMainThreadRead,
-                            hLogThreadWriteCommand);
+    while (true)
+    {
+        cin >> input;
+        auto iter = commands.find(input);
+        if (iter != commands.end())
+        {
+            (*iter->second)(hEventThreadWrite,
+                hLogThreadRead,
+                hWaitCommand,
+                hReadCommandEventThread,
+                hReadCommandLoggerThread,
+                hMainThreadRead,
+                hLogThreadWriteCommand);
             if (exit_programm == true) break;
-		}
-		else
-		{
-			cerr << "Invalid argument" << endl;
-		}
-	}
-	CloseHandle(hEventThread);
+        }
+        else
+        {
+            cerr << "Invalid argument" << endl;
+        }
+    }
+    CloseHandle(hEventThread);
     CloseHandle(hLoggerThread);
 }
 

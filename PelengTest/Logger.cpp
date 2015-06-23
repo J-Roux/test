@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-Logger::Logger(char* fileName)
+Logger::Logger(const char* fileName)
 {
     log.open(fileName);
     eventCount = 0;
@@ -12,14 +12,14 @@ Logger::~Logger()
 }
 
 
-Logger * Logger::GetLogger(int level, char* fileName)
+Logger * Logger::GetLogger(int level, const char* fileName)
 {
     switch (level)
     {
-        case 0: return new LoggerLevelZero(fileName);
-        case 1: return new LoggerLevelOne(fileName);
-        case 2: return new LoggerLevelTwo(fileName);
-        default: return NULL;
+    case 0: return new LoggerLevelZero(fileName);
+    case 1: return new LoggerLevelOne(fileName);
+    case 2: return new LoggerLevelTwo(fileName);
+    default: return NULL;
     }
 }
 

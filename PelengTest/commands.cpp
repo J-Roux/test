@@ -1,6 +1,6 @@
 #include "commands.h"
 
-void WriteMessage(HANDLE hWrite, HANDLE hReadCommand , HANDLE hWaitCommand, char * message)
+void WriteMessage(HANDLE hWrite, HANDLE hReadCommand, HANDLE hWaitCommand, char * message)
 {
     SetEvent(hReadCommand);
     cout << message << endl;
@@ -12,16 +12,16 @@ void WriteMessage(HANDLE hWrite, HANDLE hReadCommand , HANDLE hWaitCommand, char
 
 
 
-void faster_func(HANDLE hEventThreadWrite, 
-    HANDLE hLogThreadRead, 
+void faster_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
     HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread, 
+    HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
     HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "f";
-    WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand , message);
+    WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
 }
 
 void slower_func(HANDLE hEventThreadWrite,
@@ -80,7 +80,7 @@ void level_zero_func(HANDLE hEventThreadWrite,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "0";
-    WriteMessage(hLogThreadRead, hReadCommandLoggerThread , hWaitCommand, message);
+    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
 }
 
 void level_one_func(HANDLE hEventThreadWrite,
@@ -92,7 +92,7 @@ void level_one_func(HANDLE hEventThreadWrite,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "1";
-    WriteMessage(hLogThreadRead, hReadCommandLoggerThread, hWaitCommand, message);
+    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
 }
 
 void level_two_func(HANDLE hEventThreadWrite,
@@ -104,7 +104,7 @@ void level_two_func(HANDLE hEventThreadWrite,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "2";
-    WriteMessage(hLogThreadRead, hReadCommandLoggerThread, hWaitCommand, message);
+    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
 }
 
 void date_func(HANDLE hEventThreadWrite,
@@ -115,7 +115,7 @@ void date_func(HANDLE hEventThreadWrite,
     HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
-	cout << endl << __DATE__ << endl;
+    cout << endl << __DATE__ << endl;
 }
 
 void time_func(HANDLE hEventThreadWrite,
@@ -126,7 +126,7 @@ void time_func(HANDLE hEventThreadWrite,
     HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
-	cout << endl << __TIME__ << endl;
+    cout << endl << __TIME__ << endl;
 }
 
 void exit_func(HANDLE hEventThreadWrite,
@@ -137,5 +137,5 @@ void exit_func(HANDLE hEventThreadWrite,
     HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
-	exit_programm = true;
+    exit_programm = true;
 }

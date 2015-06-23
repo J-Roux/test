@@ -10,12 +10,12 @@
 
 struct Event
 {
-	char * date;
-	char * time;
-	int p0;
-	int p1;
-	int p2;
-	char * id;
+    char * date;
+    char * time;
+    int p0;
+    int p1;
+    int p2;
+    char * id;
 };
 
 Event CreateCustomEvent();
