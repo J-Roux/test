@@ -11,4 +11,5 @@ ActionMap commands = { { "date", &date_func },
 { "level0", &level_zero_func },
 { "level1", &level_one_func },
 { "level2", &level_two_func } };
+
 bool exit_programm = false;

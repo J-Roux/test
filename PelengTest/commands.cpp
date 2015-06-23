@@ -69,6 +69,7 @@ void stat_func(HANDLE hEventThreadWrite,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "s";
+    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
 }
 
 void level_zero_func(HANDLE hEventThreadWrite,

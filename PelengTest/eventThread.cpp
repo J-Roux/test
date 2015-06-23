@@ -7,7 +7,6 @@ void GenerateEvent(bool pause, double baseSpeed, HANDLE * hArgv)
     {
         double speed = baseSpeed + rand() % (int)baseSpeed;
         Event e = CreateCustomEvent();
-        //cout << speed << "  " << e.id << endl;
         WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
         Sleep(speed);
     }
@@ -46,8 +45,8 @@ DWORD WINAPI EventThread(LPVOID lpParameter)
     srand((unsigned)time(NULL));
     for (;;)
     {
-        GenerateEvent(pause, baseSpeed, hArgv);
         GetCommand(hArgv, pause, baseSpeed);
+        GenerateEvent(pause, baseSpeed, hArgv);
     }
     return 0;
 }

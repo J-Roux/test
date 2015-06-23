@@ -2,13 +2,18 @@
 
 Logger::Logger(const char* fileName)
 {
-    log.open(fileName);
-    eventCount = 0;
+    if (!log.is_open())
+    {
+        log.open(fileName);
+    }
 }
 
 Logger::~Logger()
 {
-    log.close();
+    if (log.is_open())
+    {
+        log.close();
+    }
 }
 
 
@@ -30,7 +35,6 @@ LoggerLevelZero* LoggerLevelZero::Write(const Event &e)
     log << e.time << endl;
     log << e.id << endl;
     log << endl;
-    eventCount++;
     return this;
 }
 
@@ -42,7 +46,6 @@ LoggerLevelOne* LoggerLevelOne::Write(const Event &e)
     log << e.id << endl;
     log << e.p0 << endl;
     log << endl;
-    eventCount++;
     return this;
 }
 
@@ -56,6 +59,5 @@ LoggerLevelTwo* LoggerLevelTwo::Write(const Event &e)
     log << e.p1 << endl;
     log << e.p2 << endl;
     log << endl;
-    eventCount++;
     return this;
 }

@@ -11,7 +11,6 @@ class Logger
 {
 protected:
     ofstream log;
-    int eventCount;
 
     Logger(const char* fileName);
     ~Logger();
