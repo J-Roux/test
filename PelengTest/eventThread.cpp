@@ -28,6 +28,7 @@ void GetCommand(HANDLE * hArgv, bool &pause, double &baseSpeed)
 {
     if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
     {
+        cout << "Wait command event Thread";
         CHAR command[2] = { '0', '\0' };
         DWORD dwRead;
         SetEvent(hArgv[2]);

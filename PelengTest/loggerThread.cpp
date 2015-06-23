@@ -3,18 +3,20 @@
 DWORD WINAPI LoggerThread(LPVOID lpParameter)
 {
     HANDLE * hArgv = (HANDLE*)lpParameter;
-    CHAR command[2] = { '0', '\0' };
-    DWORD dwRead;
+   
     for (;;)
     {
         Event e;
         ReadFile(hArgv[1], &e, sizeof(e), NULL, NULL);
+        cout << e.id << endl;
         if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
         {
+            CHAR command[2] = { '0', '\0' };
+            DWORD dwRead;
             SetEvent(hArgv[2]);
-            ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
+            ReadFile(hArgv[5], command, sizeof(command), &dwRead, NULL);
             cout << "get message" << endl;
-            cout << endl << command << endl;
+            cout << endl << "message is :  "<< command << endl;
             /* switch (command[0])
             {
             case '0':  break;

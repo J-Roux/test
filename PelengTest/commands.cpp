@@ -12,64 +12,130 @@ void WriteMessage(HANDLE hWrite, HANDLE hReadCommand , HANDLE hWaitCommand, char
 
 
 
-void faster_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void faster_func(HANDLE hEventThreadWrite, 
+    HANDLE hLogThreadRead, 
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread, 
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "f";
     WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand , message);
 }
 
-void slower_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void slower_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "s";
     WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
 }
 
-void pause_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void pause_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "p";
     WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
 }
 
-void resume_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void resume_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "r";
     WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
 }
 
-void stat_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void stat_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "s";
 }
 
-void level_zero_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void level_zero_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "0";
     WriteMessage(hLogThreadRead, hReadCommandLoggerThread , hWaitCommand, message);
 }
 
-void level_one_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void level_one_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "1";
     WriteMessage(hLogThreadRead, hReadCommandLoggerThread, hWaitCommand, message);
 }
 
-void level_two_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void level_two_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
     char message[] = "2";
     WriteMessage(hLogThreadRead, hReadCommandLoggerThread, hWaitCommand, message);
 }
 
-void date_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void date_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
 	cout << endl << __DATE__ << endl;
 }
 
-void time_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void time_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
 	cout << endl << __TIME__ << endl;
 }
 
-void exit_func(HANDLE hEventThreadWrite, HANDLE hLogThreadRead, HANDLE hWaitCommand, HANDLE hReadCommandEventThread, HANDLE hReadCommandLoggerThread)
+void exit_func(HANDLE hEventThreadWrite,
+    HANDLE hLogThreadRead,
+    HANDLE hWaitCommand,
+    HANDLE hReadCommandEventThread,
+    HANDLE hReadCommandLoggerThread,
+    HANDLE hMainThreadRead,
+    HANDLE hLogThreadWriteCommand)
 {
 	exit_programm = true;
 }
