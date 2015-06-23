@@ -12,8 +12,8 @@ DWORD WINAPI LoggerThread(LPVOID lpParameter)
         if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
         {
             SetEvent(hArgv[2]);
-            cout << "get message" << endl;
             ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
+            cout << "get message" << endl;
             cout << endl << command << endl;
             /* switch (command[0])
             {
