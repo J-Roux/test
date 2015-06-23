@@ -2,7 +2,7 @@
 #define COMMANDS_H
 #include "actionMap.h"
 #include <Windows.h>
-
+#include <ctime>
 
 extern ActionMap commands;
 extern bool exit_programm;

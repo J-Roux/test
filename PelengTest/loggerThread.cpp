@@ -1,6 +1,6 @@
 #include "loggerThread.h"
 
-const char * fileName = "log.txt";
+char * fileName = "log.txt";
 
 void ReadEvent(HANDLE * hArgv, Logger * logger, int &eventCount)
 {
@@ -10,19 +10,19 @@ void ReadEvent(HANDLE * hArgv, Logger * logger, int &eventCount)
     eventCount++;      
 }
 
-Logger * ExecuteCommand(CHAR * command, Logger * logger, int eventCount)
+Logger * ExecuteCommand(CHAR * command, Logger * logger, int eventCount, Logger* lvl0, Logger* lvl1, Logger* lvl2)
 {
     switch (command[0])
     {
-    case '0': logger = Logger::GetLogger(0, fileName); break;
-    case '1': logger = Logger::GetLogger(1, fileName); break;
-    case '2': logger = Logger::GetLogger(2, fileName); break;
+    case '0': logger = lvl0; break;
+    case '1': logger = lvl1; break;
+    case '2': logger = lvl2; break;
     case 's': cout << endl << "Number of events:  " << eventCount << endl;
         break;
     }     return logger;
 }
 
-Logger * GetCommand(HANDLE * hArgv, Logger * logger, int eventCount)
+Logger * GetCommand(HANDLE * hArgv, Logger * logger, int eventCount, Logger* lvl0, Logger* lvl1, Logger* lvl2)
 {
     if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
     {
@@ -30,7 +30,7 @@ Logger * GetCommand(HANDLE * hArgv, Logger * logger, int eventCount)
         DWORD dwRead;
         SetEvent(hArgv[2]);
         ReadFile(hArgv[3], command, sizeof(command), &dwRead, NULL);
-        logger = ExecuteCommand(command, logger, eventCount);
+        logger = ExecuteCommand(command, logger, eventCount, lvl0, lvl1, lvl2);
         ResetEvent(hArgv[2]);
     }        return logger;
 }
@@ -39,10 +39,13 @@ DWORD WINAPI LoggerThread(LPVOID lpParameter)
 {
     HANDLE * hArgv = (HANDLE*)lpParameter;
     Logger * logger = Logger::GetLogger(2, fileName);
+    Logger * lvl0 = Logger::GetLogger(0, fileName);
+    Logger * lvl1 = Logger::GetLogger(1, fileName);
+    Logger * lvl2 = Logger::GetLogger(2, fileName);
     int eventCount = 0;
     for (;;)
     {
-        logger = GetCommand(hArgv, logger, eventCount);
+        logger = GetCommand(hArgv, logger, eventCount, lvl0 , lvl1, lvl2);
         ReadEvent(hArgv, logger, eventCount);
     }
     return 0;

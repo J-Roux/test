@@ -12,24 +12,24 @@ class Logger
 protected:
     ofstream log;
 
-    Logger(const char* fileName);
+    Logger(char* fileName);
     ~Logger();
-public:
-    static Logger* GetLogger(int level, const char* fileName);
+public:  
+    static Logger* GetLogger(int level, char* fileName);
     virtual Logger* Write(const Event &e) abstract;
 };
 
 class LoggerLevelZero : public Logger
 {
 public:
-    LoggerLevelZero(const char* fileName) : Logger(fileName) {}
+    LoggerLevelZero(char* fileName) : Logger(fileName) {}
     virtual LoggerLevelZero* Write(const Event &e) override;
 };
 
 class LoggerLevelOne : public Logger
 {
 public:
-    LoggerLevelOne(const char* fileName) : Logger(fileName) {}
+    LoggerLevelOne(char* fileName) : Logger(fileName) {}
     virtual LoggerLevelOne* Write(const Event &e) override;
 
 };
@@ -37,7 +37,7 @@ public:
 class LoggerLevelTwo : public Logger
 {
 public:
-    LoggerLevelTwo(const char* fileName) : Logger(fileName) {}
+    LoggerLevelTwo(char* fileName) : Logger(fileName) {}
     virtual LoggerLevelTwo* Write(const Event &e) override;
 };
 

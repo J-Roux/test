@@ -106,7 +106,7 @@ void date_func(HANDLE hEventThreadWrite,
     HANDLE hReadCommandLoggerThread,
     HANDLE hLogThreadWriteCommand)
 {
-    cout << endl << __DATE__ << endl;
+    cout << GetDate() << endl;
 }
 
 void time_func(HANDLE hEventThreadWrite,
@@ -116,7 +116,7 @@ void time_func(HANDLE hEventThreadWrite,
     HANDLE hReadCommandLoggerThread,
     HANDLE hLogThreadWriteCommand)
 {
-    cout << endl << __TIME__ << endl;
+    cout << GetTime() << endl;
 }
 
 void exit_func(HANDLE hEventThreadWrite,

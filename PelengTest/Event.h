@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdlib.h>    
 #include <time.h> 
+#include "actionMap.h"
 
 struct Event
 {

@@ -4,8 +4,8 @@ Event CreateCustomEvent()
 {
     Event event;
     event.id = CreateGUID();
-    event.date = __DATE__;
-    event.time = __TIME__;
+    event.date = GetDate();
+    event.time = GetTime();
     event.p0 = rand();
     event.p1 = rand();
     event.p2 = rand();

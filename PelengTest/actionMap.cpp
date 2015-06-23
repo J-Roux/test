@@ -13,3 +13,26 @@ ActionMap commands = { { "date", &date_func },
 { "level2", &level_two_func } };
 
 bool exit_programm = false;
+
+
+char * GetTime()
+{
+    time_t timev;
+    char *buffer = new char[10];
+    tm * currentTime = new tm();
+    time(&timev);
+    localtime_s(currentTime, &timev);
+    strftime(buffer, 10,"%H:%M:%S", currentTime);
+    return buffer;
+}
+
+char * GetDate()
+{
+    time_t timev;
+    char *buffer = new char[10];
+    tm * currentTime = new tm();
+    time(&timev);
+    localtime_s(currentTime, &timev);
+    strftime(buffer, 10, "%d/%m/%y", currentTime);
+    return buffer;
+}

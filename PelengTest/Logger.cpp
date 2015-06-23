@@ -1,10 +1,10 @@
 #include "Logger.h"
 
-Logger::Logger(const char* fileName)
+Logger::Logger(char* fileName)
 {
     if (!log.is_open())
     {
-        log.open(fileName);
+        log.open(fileName , ios::app | ios::ate  );
     }
 }
 
@@ -17,8 +17,9 @@ Logger::~Logger()
 }
 
 
-Logger * Logger::GetLogger(int level, const char* fileName)
+Logger * Logger::GetLogger(int level, char* fileName)
 {
+
     switch (level)
     {
     case 0: return new LoggerLevelZero(fileName);

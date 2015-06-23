@@ -15,4 +15,7 @@ typedef void(*Function)(HANDLE hEventThreadWrite,
     HANDLE hReadCommandLoggerThread,
     HANDLE hLogThreadWriteCommand);
 typedef map<string, Function> ActionMap;
+
+char * GetTime();
+char * GetDate();
 #endif /*ACTIONMAP_H*/
