@@ -3,7 +3,6 @@
 Event CreateCustomEvent()
 {
     Event event;
-    srand((unsigned int)time(NULL));
     event.id = CreateGUID();
     event.date = __DATE__;
     event.time = __TIME__;

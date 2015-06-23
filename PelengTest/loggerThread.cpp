@@ -10,7 +10,7 @@ DWORD WINAPI LoggerThread(LPVOID lpParameter)
     {
         Event e;
         ReadFile(hArgv[1], &e, sizeof(e), NULL, NULL);
-       // cout << e.id << endl;
+        cout << e.id << endl;
         logger->Write(e);
         if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
         {

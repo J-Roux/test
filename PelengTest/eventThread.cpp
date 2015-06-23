@@ -7,7 +7,7 @@ void GenerateEvent(bool pause, double baseSpeed, HANDLE * hArgv)
     {
         double speed = baseSpeed + rand() % (int)baseSpeed;
         Event e = CreateCustomEvent();
-       // cout << speed << "  " << e.id << endl;
+        //cout << speed << "  " << e.id << endl;
         WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
         Sleep(speed);
     }
@@ -29,7 +29,6 @@ void GetCommand(HANDLE * hArgv, bool &pause, double &baseSpeed)
 {
     if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
     {
-        cout << "Wait command event Thread";
         CHAR command[2] = { '0', '\0' };
         DWORD dwRead;
         SetEvent(hArgv[2]);
