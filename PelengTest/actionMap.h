@@ -14,5 +14,4 @@ typedef void(*Function)(HANDLE hEventThreadWrite,
                         HANDLE hReadCommandEventThread, 
                         HANDLE hReadCommandLoggerThread);
 typedef map<string, Function> ActionMap;
-
 #endif /*ACTIONMAP_H*/

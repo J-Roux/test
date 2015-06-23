@@ -1,86 +1,9 @@
 #include "Logger.h"
 #include "main.h"
+#include "eventThread.h"
+#include "loggerThread.h"
 
 
-DWORD WINAPI EventThread(LPVOID lpParameter)
-{
-    HANDLE * hArgv = (HANDLE*) lpParameter;
-    CHAR command[2] = {'0', '\0'};
-    DWORD dwRead;
-    double baseSpeed = 1000;
-    bool pause = false;
-    srand((unsigned)time(NULL));
-    for (;;)
-    {
-        if (!pause)
-        {
-            double speed = baseSpeed + rand() % (int)baseSpeed;
-            Event e = CreateCustomEvent();
-            cout << speed << "  " << e.id <<endl;
-            WriteFile(hArgv[3], &e, sizeof(e), NULL, NULL);
-            Sleep(speed);
-        }
-        if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
-        {
-            SetEvent(hArgv[2]);
-            ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
-            switch (command[0])
-            {
-                case 'p': pause = true; break;
-                case 'r': pause = false; break;
-                case 'f': if( baseSpeed > 0) baseSpeed *= 0.3; break;
-                case 's': baseSpeed *= 1.3 ; break;
-            }
-            ResetEvent(hArgv[2]);
-        }
-    }
-	return 0;
-}
-
-DWORD WINAPI LoggerThread(LPVOID lpParameter)
-{
-    HANDLE * hArgv = (HANDLE*)lpParameter;
-    CHAR command[2] = { '0', '\0' };
-    DWORD dwRead;
-    for (;;)
-    {
-        Event e;
-        ReadFile(hArgv[1], &e, sizeof(e), NULL, NULL);
-        if (WaitForSingleObject(hArgv[0], 0) == WAIT_OBJECT_0)
-        {
-             SetEvent(hArgv[2]);
-             cout << "get message" << endl;
-             ReadFile(hArgv[1], command, sizeof(command), &dwRead, NULL);
-             cout << endl << command << endl;
-            /* switch (command[0])
-             {
-             case '0':  break;
-             case '1': break;
-             case '2': break;
-             case 's':
-             break;
-             }*/
-             ResetEvent(hArgv[2]);
-        }
-    }
-    return 0;
-}
-
-
-void Prepare()
-{
-	commands.insert(make_pair("date", &date_func));
-	commands.insert(make_pair("time", &time_func));
-	commands.insert(make_pair("exit", &exit_func));
-	commands.insert(make_pair("faster", &faster_func));
-	commands.insert(make_pair("slower", &slower_func));
-	commands.insert(make_pair("pause", &pause_func));
-	commands.insert(make_pair("resume", &resume_func));
-	commands.insert(make_pair("stat", &stat_func));
-	commands.insert(make_pair("level0", &level_zero_func));
-	commands.insert(make_pair("level1", &level_one_func));
-	commands.insert(make_pair("level2", &level_two_func));
-}
 
 void CreateAnonPipe(HANDLE &child_input_read, HANDLE &child_input_write)
 {
@@ -119,7 +42,6 @@ void main()
     HANDLE hLogThreadRead;
     HANDLE hMainThreadRead;
     HANDLE hMainThreadWrite;
-    Prepare();
     CreateAnonPipe(hEventThreadRead, hEventThreadWrite);
     CreateAnonPipe(hLogThreadRead, hLogThreadWrite);
     CreateAnonPipe(hMainThreadRead, hMainThreadWrite);
@@ -128,18 +50,20 @@ void main()
     HANDLE hReadCommandLoggerThread = CreateEventA(NULL, false, false, CreateGUID());
     HANDLE hEventArgs[] = { hReadCommandEventThread, hEventThreadRead, hWaitCommand, hLogThreadWrite };
     HANDLE hLoggerArgs[] = { hReadCommandLoggerThread, hLogThreadRead, hWaitCommand, hMainThreadWrite };
-    HANDLE hFuncArgs[] = { hEventThreadWrite, hLogThreadWrite, hWaitCommand, 
-        hReadCommandEventThread, hReadCommandLoggerThread };
     HANDLE hEventThread = CreateEventThread(hEventArgs);
     HANDLE hLoggerThread = CreateLoggerThread(hLoggerArgs);
-    std::string input;
+    string input;
 	while (true)
 	{
-		std::cin >> input;
+		cin >> input;
 		auto iter = commands.find(input);
 		if (iter != commands.end())
 		{
-            (*iter->second)(hEventThreadWrite, hLogThreadRead, hWaitCommand, hReadCommandEventThread, hReadCommandLoggerThread);
+            (*iter->second)(hEventThreadWrite, 
+                            hLogThreadRead, 
+                            hWaitCommand, 
+                            hReadCommandEventThread, 
+                            hReadCommandLoggerThread);
             if (exit_programm == true) break;
 		}
 		else
