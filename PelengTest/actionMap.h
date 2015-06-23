@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ACTIONMAP_H
+#define ACTIONMAP_H
+
 #include <map>
 #include <Windows.h>
 #include <string>
@@ -6,5 +8,11 @@
 
 using namespace std;
 
-typedef void(*Function)(HANDLE*);
+typedef void(*Function)(HANDLE hEventThreadWrite,
+                        HANDLE hLogThreadRead, 
+                        HANDLE hWaitCommand,
+                        HANDLE hReadCommandEventThread, 
+                        HANDLE hReadCommandLoggerThread);
 typedef map<string, Function> ActionMap;
+
+#endif /*ACTIONMAP_H*/

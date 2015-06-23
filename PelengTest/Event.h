@@ -1,4 +1,6 @@
-#pragma once
+#ifndef EVENT_H
+#define EVENT_H
+
 #include <Objbase.h>
 #include <string>
 #include <time.h>
@@ -18,3 +20,5 @@ struct Event
 
 Event CreateCustomEvent();
 char * CreateGUID();
+
+#endif /*EVENT_H*/

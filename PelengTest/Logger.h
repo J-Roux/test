@@ -1,3 +1,6 @@
+#ifndef LOGGER_H
+#define LOGGER_H
+
 #include "Event.h"
 #include <fstream>
 
@@ -38,3 +41,5 @@ public:
     LoggerLevelTwo(char* fileName) : Logger(fileName) {}
     virtual LoggerLevelTwo* Write(const Event &e) override;
 };
+
+#endif  /*LOGGER_H*/
