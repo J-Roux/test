@@ -34,14 +34,30 @@ HANDLE CreateLoggerThread(HANDLE *argv)
     return hLoggerThread;
 }
 
+void ExecuteUserInput(FuncArgs args)
+{
+    while (true)
+    {
+        string input;
+        cin >> input;
+        auto iter = commands.find(input);
+        if (iter != commands.end())
+        {
+            (*iter->second)(args);
+            if (exit_programm == true) break;
+        }
+        else
+        {
+            cerr << "Invalid argument" << endl;
+        }
+    }
+}
+
 void main()
 {
-    HANDLE hEventThreadRead;
-    HANDLE hEventThreadWrite;
-    HANDLE hLogThreadWrite;
-    HANDLE hLogThreadRead;
-    HANDLE hLogThreadReadCommand;
-    HANDLE hLogThreadWriteCommand;
+    HANDLE hEventThreadRead, hEventThreadWrite;
+    HANDLE hLogThreadWrite, hLogThreadRead;
+    HANDLE hLogThreadReadCommand, hLogThreadWriteCommand;
     CreateAnonPipe(hEventThreadRead, hEventThreadWrite);
     CreateAnonPipe(hLogThreadRead, hLogThreadWrite);
     CreateAnonPipe(hLogThreadReadCommand, hLogThreadWriteCommand);
@@ -50,28 +66,15 @@ void main()
     HANDLE hReadCommandLoggerThread = CreateEventA(NULL, false, false, CreateGUID());
     HANDLE hEventArgs[] = { hReadCommandEventThread, hEventThreadRead, hWaitCommand, hLogThreadWrite };
     HANDLE hLoggerArgs[] = { hReadCommandLoggerThread, hLogThreadRead, hWaitCommand, hLogThreadReadCommand };
+    FuncArgs args = { hEventThreadWrite,
+         hLogThreadRead,
+         hWaitCommand,
+         hReadCommandEventThread,
+         hReadCommandLoggerThread,
+         hLogThreadWriteCommand };
     HANDLE hEventThread = CreateEventThread(hEventArgs);
     HANDLE hLoggerThread = CreateLoggerThread(hLoggerArgs);
-    string input;
-    while (true)
-    {
-        cin >> input;
-        auto iter = commands.find(input);
-        if (iter != commands.end())
-        {
-            (*iter->second)(hEventThreadWrite,
-                hLogThreadRead,
-                hWaitCommand,
-                hReadCommandEventThread,
-                hReadCommandLoggerThread,
-                hLogThreadWriteCommand);
-            if (exit_programm == true) break;
-        }
-        else
-        {
-            cerr << "Invalid argument" << endl;
-        }
-    }
+    ExecuteUserInput(args);
     CloseHandle(hEventThread);
     CloseHandle(hLoggerThread);
 }

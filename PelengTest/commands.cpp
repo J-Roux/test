@@ -11,120 +11,65 @@ void WriteMessage(HANDLE hWrite, HANDLE hReadCommand, HANDLE hWaitCommand, char 
 
 
 
-void faster_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void faster_func(FuncArgs args)
 {
     char message[] = "f";
-    WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
+    WriteMessage(args.hEventThreadWrite, args.hReadCommandEventThread, args.hWaitCommand, message);
 }
 
-void slower_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void slower_func(FuncArgs args)
 {
     char message[] = "s";
-    WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
+    WriteMessage(args.hEventThreadWrite, args.hReadCommandEventThread, args.hWaitCommand, message);
 }
 
-void pause_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void pause_func(FuncArgs args)
 {
     char message[] = "p";
-    WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
+    WriteMessage(args.hEventThreadWrite, args.hReadCommandEventThread, args.hWaitCommand, message);
 }
 
-void resume_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void resume_func(FuncArgs args)
 {
     char message[] = "r";
-    WriteMessage(hEventThreadWrite, hReadCommandEventThread, hWaitCommand, message);
+    WriteMessage(args.hEventThreadWrite, args.hReadCommandEventThread, args.hWaitCommand, message);
 }
 
-void stat_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void stat_func(FuncArgs args)
 {
     char message[] = "s";
-    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
+    WriteMessage(args.hLogThreadWriteCommand, args.hReadCommandLoggerThread, args.hWaitCommand, message);
 }
 
-void level_zero_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void level_zero_func(FuncArgs args)
 {
     char message[] = "0";
-    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
+    WriteMessage(args.hLogThreadWriteCommand, args.hReadCommandLoggerThread, args.hWaitCommand, message);
 }
 
-void level_one_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void level_one_func(FuncArgs args)
 {
     char message[] = "1";
-    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
+    WriteMessage(args.hLogThreadWriteCommand, args.hReadCommandLoggerThread, args.hWaitCommand, message);
 }
 
-void level_two_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void level_two_func(FuncArgs args)
 {
     char message[] = "2";
-    WriteMessage(hLogThreadWriteCommand, hReadCommandLoggerThread, hWaitCommand, message);
+    WriteMessage(args.hLogThreadWriteCommand, args.hReadCommandLoggerThread, args.hWaitCommand, message);
 }
 
-void date_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void date_func(FuncArgs args)
 {
     cout << GetDate() << endl;
 }
 
-void time_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void time_func(FuncArgs args)
 {
     cout << GetTime() << endl;
 }
 
-void exit_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand)
+void exit_func(FuncArgs args)
 {
     exit_programm = true;
 }

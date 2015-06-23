@@ -8,12 +8,17 @@
 
 using namespace std;
 
-typedef void(*Function)(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand);
+struct FuncArgs
+{
+    HANDLE hEventThreadWrite;
+    HANDLE hLogThreadRead;
+    HANDLE hWaitCommand;
+    HANDLE hReadCommandEventThread;
+    HANDLE hReadCommandLoggerThread;
+    HANDLE hLogThreadWriteCommand;
+};
+
+typedef void(*Function)(FuncArgs args);
 typedef map<string, Function> ActionMap;
 
 char * GetTime();

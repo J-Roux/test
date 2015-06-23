@@ -7,81 +7,26 @@
 extern ActionMap commands;
 extern bool exit_programm;
 
-void date_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,     
-    HANDLE hLogThreadWriteCommand);
+void date_func(FuncArgs args);
 
-void time_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,     
-    HANDLE hLogThreadWriteCommand);
+void time_func(FuncArgs args);
 
-void exit_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,     
-    HANDLE hLogThreadWriteCommand);
+void exit_func(FuncArgs args);
 
-void faster_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,     
-    HANDLE hLogThreadWriteCommand);
+void faster_func(FuncArgs args);
 
-void slower_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand);
+void slower_func(FuncArgs args);
 
-void pause_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread, 
-    HANDLE hLogThreadWriteCommand);
+void pause_func(FuncArgs args);
 
-void resume_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread, 
-    HANDLE hLogThreadWriteCommand);
+void resume_func(FuncArgs args);
 
-void stat_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,     
-    HANDLE hLogThreadWriteCommand);
+void stat_func(FuncArgs args);
 
-void level_zero_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,     
-    HANDLE hLogThreadWriteCommand);
+void level_zero_func(FuncArgs args);
 
-void level_one_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand);
+void level_one_func(FuncArgs args);
 
-void level_two_func(HANDLE hEventThreadWrite,
-    HANDLE hLogThreadRead,
-    HANDLE hWaitCommand,
-    HANDLE hReadCommandEventThread,
-    HANDLE hReadCommandLoggerThread,
-    HANDLE hLogThreadWriteCommand);
+void level_two_func(FuncArgs args);
 
 #endif /*COMMANDS_H*/
