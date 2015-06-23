@@ -3,7 +3,6 @@
 void WriteMessage(HANDLE hWrite, HANDLE hReadCommand, HANDLE hWaitCommand, char * message)
 {
     SetEvent(hReadCommand);
-    cout << message << endl;
     WaitForSingleObject(hWaitCommand, INFINITE);
     DWORD bytes_written = 1;
     WriteFile(hWrite, message, strlen(message), &bytes_written, NULL);
@@ -17,7 +16,6 @@ void faster_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "f";
@@ -29,7 +27,6 @@ void slower_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "s";
@@ -41,7 +38,6 @@ void pause_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "p";
@@ -53,7 +49,6 @@ void resume_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "r";
@@ -65,7 +60,6 @@ void stat_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "s";
@@ -77,7 +71,6 @@ void level_zero_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "0";
@@ -89,7 +82,6 @@ void level_one_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "1";
@@ -101,7 +93,6 @@ void level_two_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     char message[] = "2";
@@ -113,7 +104,6 @@ void date_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     cout << endl << __DATE__ << endl;
@@ -124,7 +114,6 @@ void time_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     cout << endl << __TIME__ << endl;
@@ -135,7 +124,6 @@ void exit_func(HANDLE hEventThreadWrite,
     HANDLE hWaitCommand,
     HANDLE hReadCommandEventThread,
     HANDLE hReadCommandLoggerThread,
-    HANDLE hMainThreadRead,
     HANDLE hLogThreadWriteCommand)
 {
     exit_programm = true;

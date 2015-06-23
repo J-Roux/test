@@ -14,8 +14,7 @@ void GenerateEvent(bool pause, double baseSpeed, HANDLE * hArgv)
 
 void ExecuteCommand(CHAR * command, bool &pause, double &baseSpeed)
 {
-    cout << command << endl;
-    switch (command[0])
+     switch (command[0])
     {
     case 'p': pause = true; break;
     case 'r': pause = false; break;

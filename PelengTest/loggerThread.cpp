@@ -2,13 +2,12 @@
 
 const char * fileName = "log.txt";
 
-int ReadEvent(HANDLE * hArgv, Logger * logger, int eventCount)
+void ReadEvent(HANDLE * hArgv, Logger * logger, int &eventCount)
 {
     Event e;
     ReadFile(hArgv[1], &e, sizeof(e), NULL, NULL);
-    cout << e.id << endl;
     logger->Write(e);
-    eventCount++;        return eventCount;
+    eventCount++;      
 }
 
 Logger * ExecuteCommand(CHAR * command, Logger * logger, int eventCount)
@@ -30,7 +29,7 @@ Logger * GetCommand(HANDLE * hArgv, Logger * logger, int eventCount)
         CHAR command[2] = { '0', '\0' };
         DWORD dwRead;
         SetEvent(hArgv[2]);
-        ReadFile(hArgv[4], command, sizeof(command), &dwRead, NULL);
+        ReadFile(hArgv[3], command, sizeof(command), &dwRead, NULL);
         logger = ExecuteCommand(command, logger, eventCount);
         ResetEvent(hArgv[2]);
     }        return logger;
@@ -44,7 +43,7 @@ DWORD WINAPI LoggerThread(LPVOID lpParameter)
     for (;;)
     {
         logger = GetCommand(hArgv, logger, eventCount);
-        eventCount = ReadEvent(hArgv, logger, eventCount);
+        ReadEvent(hArgv, logger, eventCount);
     }
     return 0;
 }

@@ -40,19 +40,16 @@ void main()
     HANDLE hEventThreadWrite;
     HANDLE hLogThreadWrite;
     HANDLE hLogThreadRead;
-    HANDLE hMainThreadRead;
-    HANDLE hMainThreadWrite;
     HANDLE hLogThreadReadCommand;
     HANDLE hLogThreadWriteCommand;
     CreateAnonPipe(hEventThreadRead, hEventThreadWrite);
     CreateAnonPipe(hLogThreadRead, hLogThreadWrite);
-    CreateAnonPipe(hMainThreadRead, hMainThreadWrite);
     CreateAnonPipe(hLogThreadReadCommand, hLogThreadWriteCommand);
     HANDLE hWaitCommand = CreateEventA(NULL, false, false, CreateGUID());
     HANDLE hReadCommandEventThread = CreateEventA(NULL, false, false, CreateGUID());
     HANDLE hReadCommandLoggerThread = CreateEventA(NULL, false, false, CreateGUID());
     HANDLE hEventArgs[] = { hReadCommandEventThread, hEventThreadRead, hWaitCommand, hLogThreadWrite };
-    HANDLE hLoggerArgs[] = { hReadCommandLoggerThread, hLogThreadRead, hWaitCommand, hMainThreadWrite, hLogThreadReadCommand };
+    HANDLE hLoggerArgs[] = { hReadCommandLoggerThread, hLogThreadRead, hWaitCommand, hLogThreadReadCommand };
     HANDLE hEventThread = CreateEventThread(hEventArgs);
     HANDLE hLoggerThread = CreateLoggerThread(hLoggerArgs);
     string input;
@@ -67,7 +64,6 @@ void main()
                 hWaitCommand,
                 hReadCommandEventThread,
                 hReadCommandLoggerThread,
-                hMainThreadRead,
                 hLogThreadWriteCommand);
             if (exit_programm == true) break;
         }
