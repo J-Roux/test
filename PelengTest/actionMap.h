@@ -21,6 +21,5 @@ struct FuncArgs
 typedef void(*Function)(FuncArgs args);
 typedef map<string, Function> ActionMap;
 
-char * GetTime();
-char * GetDate();
+
 #endif /*ACTIONMAP_H*/

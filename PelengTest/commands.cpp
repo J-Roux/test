@@ -61,12 +61,16 @@ void level_two_func(FuncArgs args)
 
 void date_func(FuncArgs args)
 {
-    cout << GetDate() << endl;
+    char * date = GetDate();
+    cout << date << endl;
+    delete date;
 }
 
 void time_func(FuncArgs args)
 {
-    cout << GetTime() << endl;
+    char * time = GetTime();
+    cout << time << endl;
+    delete time;
 }
 
 void exit_func(FuncArgs args)

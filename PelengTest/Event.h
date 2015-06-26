@@ -17,9 +17,13 @@ struct Event
     int p1;
     int p2;
     char * id;
+    ~Event();
 };
 
 Event CreateCustomEvent();
 char * CreateGUID();
+
+char * GetTime();
+char * GetDate();
 
 #endif /*EVENT_H*/

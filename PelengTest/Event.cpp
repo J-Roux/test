@@ -1,5 +1,27 @@
 #include "Event.h"
 
+char * GetTime()
+{
+    time_t timev;
+    char *buffer = new char[10];
+    tm * currentTime = new tm();
+    time(&timev);
+    localtime_s(currentTime, &timev);
+    strftime(buffer, 10, "%H:%M:%S", currentTime);
+    return buffer;
+}
+
+char * GetDate()
+{
+    time_t timev;
+    char *buffer = new char[10];
+    tm * currentTime = new tm();
+    time(&timev);
+    localtime_s(currentTime, &timev);
+    strftime(buffer, 10, "%d/%m/%y", currentTime);
+    return buffer;
+}
+
 Event CreateCustomEvent()
 {
     Event event;
@@ -10,6 +32,13 @@ Event CreateCustomEvent()
     event.p1 = rand();
     event.p2 = rand();
     return event;
+}
+
+Event::~Event()
+{
+    delete this->id;
+    delete this->date;
+    delete this->time;
 }
 
 
