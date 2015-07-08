@@ -17,9 +17,9 @@ struct Event
     int p1;
     int p2;
     char * id;
-    ~Event();
 };
 
+void DeleteEvent(Event &e);
 Event CreateCustomEvent();
 char * CreateGUID();
 

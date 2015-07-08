@@ -8,6 +8,7 @@ char * GetTime()
     time(&timev);
     localtime_s(currentTime, &timev);
     strftime(buffer, 10, "%H:%M:%S", currentTime);
+    delete currentTime;
     return buffer;
 }
 
@@ -19,6 +20,7 @@ char * GetDate()
     time(&timev);
     localtime_s(currentTime, &timev);
     strftime(buffer, 10, "%d/%m/%y", currentTime);
+    delete currentTime;
     return buffer;
 }
 
@@ -34,12 +36,13 @@ Event CreateCustomEvent()
     return event;
 }
 
-Event::~Event()
+void DeleteEvent(Event &e)
 {
-    delete this->id;
-    delete this->date;
-    delete this->time;
+    delete e.id;
+    delete e.date;
+    delete e.time;
 }
+
 
 
 char * CreateGUID()

@@ -14,7 +14,8 @@ protected:
 
     Logger(char* fileName);
     ~Logger();
-public:  
+public:
+
     static Logger* GetLogger(int level, char* fileName);
     virtual Logger* Write(const Event &e) abstract;
 };
@@ -40,5 +41,6 @@ public:
     LoggerLevelTwo(char* fileName) : Logger(fileName) {}
     virtual LoggerLevelTwo* Write(const Event &e) override;
 };
+
 
 #endif  /*LOGGER_H*/

@@ -67,15 +67,19 @@
     <ClCompile Include="actionMap.cpp" />
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="eventThread.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="loggerThread.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actionMap.h" />
     <ClInclude Include="commands.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="eventThread.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="loggerThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,4 +22,5 @@ typedef void(*Function)(FuncArgs args);
 typedef map<string, Function> ActionMap;
 
 
+
 #endif /*ACTIONMAP_H*/

@@ -7,6 +7,7 @@ void ReadEvent(HANDLE * hArgv, Logger * logger, int &eventCount)
     Event e;
     ReadFile(hArgv[1], &e, sizeof(e), NULL, NULL);
     logger->Write(e);
+    DeleteEvent(e);
     eventCount++;      
 }
 
